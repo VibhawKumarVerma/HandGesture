@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Math Solver</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 30px;
+    }
+    canvas {
+      border: 2px solid black;
+      cursor: crosshair;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #output {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 Draw Your Math Problem</h1>
+  
+  <canvas id="drawCanvas" width="500" height="400"></canvas><br>
+  <button onclick="clearCanvas()">Clear</button>
+  <button onclick="sendToServer()">Solve</button>
+  
+  <p id="output">AI Answer will appear here...</p>
+
+  <script>
+    const canvas = document.getElementById("drawCanvas");
+    const ctx = canvas.getContext("2d");
+    let drawing = false;
+
+    // Drawing events
+    canvas.onmousedown = () => drawing = true;
+    canvas.onmouseup = () => drawing = false;
+    canvas.onmousemove = draw;
+
+    function draw(e) {
+      if (!drawing) return;
+      ctx.fillStyle = "black";
+      ctx.fillRect(e.offsetX, e.offsetY, 4, 4);
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    async function sendToServer() {
+      const blob = await new Promise(r => canvas.toBlob(r, "image/png"));
+      const formData = new FormData();
+      formData.append("file", blob, "canvas.png");
+
+      try {
+        const res = await fetch("http://127.0.0.1:8000/solve", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await res.json();
+        document.getElementById("output").innerText = "AI Answer: " + data.answer;
+      } catch (err) {
+        document.getElementById("output").innerText = "Error: " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
