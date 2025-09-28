@@ -16,7 +16,7 @@ app.add_middleware(
 )
 
 # Configure Gemini
-genai.configure(api_key="AIzaSyAjmhfYe_WpHSx72jaqp3kQyjqte8SdU8g")
+genai.configure(api_key="API_KEY")
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 @app.post("/solve")
