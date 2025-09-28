@@ -1,0 +1,8 @@
+✋ Gesture Controls
+
+
+| Gesture             | Action                   |
+| ------------------- | ------------------------ |
+| ✌️ Index finger up  | Draw on canvas           |
+| 🤚 All fingers up   | Submit to AI for solving |
+| 👍 Thumb & Pinky up | Toggle eraser mode       |
