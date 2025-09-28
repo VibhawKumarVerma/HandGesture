@@ -6,7 +6,7 @@ import google.generativeai as genai
 from PIL import Image
 
 # Configure Google Generative AI
-genai.configure(api_key="AIzaSyBkRVysWc68wAjETCksKDRTt_ciUKw51BQ")
+genai.configure(api_key="API_KEY")
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Initialize the webcam
